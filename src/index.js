@@ -1,5 +1,5 @@
 /* Чтобы работал препроцессор JSX нам необходим React, поэтому его всегда импортируем */
-import React from 'react';
+import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 // import App from './App';
@@ -58,5 +58,54 @@ const App = () => {
 }
 
 // const elem = React.createElement('h2', null, "Hello world!!");
+
+// ----------------------------------------------------------------------------------
+/* Свойства и состояния компонентов. События в React_Теория */
+/* Вместо оболочки <div></div> можно обернуть в <React.Fragment></React.Fragment> или <> */
+/* props {name, surname, link} - объект со всеми атрибутами, которые мы передаём. Значения атрибутов, которые были установлены больше менять нельзя! */
+/* Элементы компонента (h1, a) менять нельзя, для этого нужно создавать новый компонент */
+
+class WhoAmI extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      years: 25
+    };
+    this.nextYear = this.nextYear.bind(this);
+    // this.nextYear = () => {
+    //   this.setState(state => ({
+    //         years: ++state.years
+    //       }));
+    // };
+  }
+  nextYear() {
+    console.log(1);
+    // this.state.years++
+    this.setState(state => ({
+      years: ++state.years
+    }));
+  }
+  render() {
+    const {name, surname, link} = this.props;
+    const {years} = this.state;
+    return (
+      <React.Fragment>
+        <button onClick={this.nextYear} >++</button>
+        <h1>Моё имя - {name}, фамилия - {surname}, лет = {years}</h1>
+        <a href={link}>Мой профиль</a>
+      </React.Fragment>
+    )  
+  }
+}
+
+const All = () => {
+  return (
+    <>
+      <WhoAmI name="Дмитрий" surname="Сафронов" link="https://github.com/svsdima" />
+      <WhoAmI name="Елена" surname="Сафронова" link="https://github.com/svsdima" />
+      <WhoAmI name="Виктория" surname="Сафронова" link="https://github.com/svsdima" />
+    </>
+  )
+}
 
 ReactDOM.render(<App/>, document.getElementById('root'));
